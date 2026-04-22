@@ -58,29 +58,32 @@
     </div>
 
     <script>
-        var audio = document.getElementById("bgm");
-        var musicBtn = document.getElementById("music-btn");
-
-        // 청첩장 열기 버튼 클릭 시 실행
-        function openInvitation() {
-            document.getElementById("intro-screen").style.display = "none";
-            document.getElementById("main-content").style.display = "block";
-            musicBtn.style.display = "block"; // 음악 버튼 보이기
-            
-            // 음악 재생
-            audio.play();
-        }
-
-        // 음악 재생/정지 토글
-        function toggleMusic() {
-            if (audio.paused) {
-                audio.play();
-                musicBtn.innerText = "🔊"; // 재생 아이콘
-            } else {
-                audio.pause();
-                musicBtn.innerText = "🔇"; // 음소거 아이콘
+            var audio = document.getElementById("bgm");
+            var musicBtn = document.getElementById("music-btn");
+    
+            // 청첩장 열기 버튼 클릭 시 실행
+            function openInvitation() {
+                document.getElementById("intro-screen").style.display = "none";
+                document.getElementById("main-content").style.display = "block";
+                musicBtn.style.display = "block"; 
+                
+                // 모바일 브라우저 버그 방지를 위해 강제 로드 후 재생
+                audio.load(); 
+                audio.play().catch(function(error) {
+                    console.log("자동 재생이 차단되었습니다:", error);
+                });
             }
-        }
-    </script>
+    
+            // 음악 재생/정지 토글
+            function toggleMusic() {
+                if (audio.paused) {
+                    audio.play();
+                    musicBtn.innerText = "🔊"; 
+                } else {
+                    audio.pause();
+                    musicBtn.innerText = "🔇"; 
+                }
+            }
+        </script>
 </body>
 </html>
